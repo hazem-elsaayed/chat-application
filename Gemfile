@@ -39,6 +39,11 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 gem 'rufus-scheduler', '~> 3.8', '>= 3.8.1'
+gem 'search_flip'
+gem 'active_model_serializers'
+gem 'bunny'
+gem 'redis'
+gem 'redis-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
