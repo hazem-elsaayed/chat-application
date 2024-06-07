@@ -6,5 +6,13 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  resources :applications, only: [:index, :show, :update, :create], param: :token do
+    resources :chats, only: [:index, :show, :update, :create], param: :number do
+      resources :messages, only: [:index, :show, :update, :create], param: :message_number do
+        get 'search', on: :collection
+      end
+    end
+  end 
+
+  match '*unmatched', to: 'application#route_not_found', via: :all
 end
