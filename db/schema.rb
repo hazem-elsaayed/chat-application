@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_185251) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_200521) do
   create_table "applications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "token", null: false
-    t.integer "chats_count"
+    t.integer "chats_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_applications_on_token", unique: true
@@ -22,22 +22,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_185251) do
 
   create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "chat_number"
-    t.integer "messages_count"
+    t.integer "messages_count", default: 0
     t.bigint "application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "name", null: false
     t.index ["application_id"], name: "index_chats_on_application_id"
+    t.index ["chat_number"], name: "index_chats_on_chat_number", unique: true
   end
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "message"
-    t.string "sender"
+    t.text "content", null: false
+    t.string "sender", null: false
     t.integer "message_number"
     t.bigint "chat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["message_number"], name: "index_messages_on_message_number", unique: true
   end
 
   add_foreign_key "chats", "applications"
