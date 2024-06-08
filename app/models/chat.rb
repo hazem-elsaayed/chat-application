@@ -3,4 +3,8 @@ class Chat < ApplicationRecord
   has_many :message, class_name: "Message", foreign_key: "chat_id"
   validates :name, :chat_number, presence: true
   validates :chat_number, uniqueness: true
+
+  def to_param
+    chat_number.to_s
+  end
 end

@@ -10,4 +10,8 @@ class Application < ApplicationRecord
       break token unless self.class.exists?(token: token)
     end
   end
+
+  def to_param
+    token
+  end
 end
