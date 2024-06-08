@@ -1,0 +1,68 @@
+version: '3.7'
+services:
+  elasticsearch:
+    container_name: es-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - xpack.security.enabled=false
+      - 'discovery.type=single-node'
+    ports:
+      - 9200:9200
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ['CMD', 'rabbitmqctl', 'status']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: 'redis:alpine'
+    container_name: 'redis'
+    command: redis-server
+    ports:
+      - '6380:6379'
+    volumes:
+      - redis_data:/data
+
+  db:
+    image: 'mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: test123456
+    ports:
+      - '3307:3306'
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+    volumes:
+      - chat_app_db:/var/lib/mysql
+
+  website:
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: test123456
+      DB_DATABASE: chat_app
+      DB_PORT: 3306
+      DB_HOST: db
+      ES_HOST: http://es-container:9200
+      RAILS_MAX_THREADS: 5
+      RABBITMQ_HOST: rabbitmq
+      SECRET_KEY_BASE: 6aabd6f28eec1111b5834d26e968b58f0e826c5fd69ad1519d9412dc5fe5caf57abc3d8986215aab5891474c990f03db5f13e4e97e48545142cb02333a5d1e74
+    volumes:
+      - '.:/app'
+
+volumes:
+  chat_app_db:
+  redis_data:
