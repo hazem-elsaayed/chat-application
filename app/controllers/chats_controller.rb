@@ -19,7 +19,7 @@ class ChatsController < ApplicationController
   end
 
   def show
-    chat = @application.chat.find_by!(chat_number: params[:chat_number])
+    chat = @application.chat.find_by!(chat_number: params[:number])
     render json: chat
   rescue StandardError => e
     render json: { success: false, message: e }, status: :bad_request
@@ -27,7 +27,7 @@ class ChatsController < ApplicationController
 
   def update
     Chat.transaction do
-      chat = @application.chat.lock.find_by!(chat_number: params[:chat_number])
+      chat = @application.chat.lock.find_by!(chat_number: params[:number])
       chat.update!(name: params[:name])
     end
     render json: { success: true, message: 'successfully updated' }
