@@ -1,0 +1,308 @@
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  /applications:
+    post:
+      tags:
+        - applications
+      summary: Create a new application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Application created successfully
+        '400':
+          description: Bad request
+    get:
+      summary: Get all applications
+      tags:
+        - applications
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+  /applications/{token}:
+    get:
+      tags:
+        - applications
+      summary: Get a specific application
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - applications
+      summary: Update a specific application
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Application updated successfully
+        '400':
+          description: Bad request
+  /applications/{application_token}/chats:
+    post:
+      tags:
+        - chats
+      summary: Create a new chat
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Chat created successfully
+        '400':
+          description: Bad request
+    get:
+      tags:
+        - chats
+      summary: Get all chats
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+  /applications/{application_token}/chats/{chat_number}:
+    get:
+      tags:
+        - chats
+      summary: Get a specific chat
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - chats
+      summary: Update a specific chat
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Chat updated successfully
+        '400':
+          description: Bad request
+  /applications/{application_token}/chats/{chat_number}/messages:
+    post:
+      tags:
+        - messages
+      summary: Create a new message
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sender:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Message created successfully
+        '400':
+          description: Bad request
+    get:
+      tags:
+        - messages
+      summary: Get all messages
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+  /applications/{application_token}/chats/{chat_number}/messages/{message_number}:
+    get:
+      tags:
+        - messages
+      summary: Get a specific message
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: message_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - messages
+      summary: Update a specific message
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: message_number
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sender:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Message updated successfully
+        '400':
+          description: Bad request
+  /applications/{application_token}/chats/{chat_number}/messages/search:
+    get:
+      tags:
+        - messages
+      summary: Search messages
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: chat_number
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

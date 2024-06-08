@@ -47,6 +47,7 @@ gem 'redis-rails'
 gem 'elasticsearch-model'
 gem 'elasticsearch', "< 7.14"
 gem 'dotenv-rails'
+gem 'rswag'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

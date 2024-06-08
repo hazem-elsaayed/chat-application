@@ -189,6 +189,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.7.2)
+    json-schema (4.3.0)
+      addressable (>= 2.8)
     jsonapi-renderer (0.2.2)
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
@@ -318,6 +320,21 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.13.1)
+    rswag (2.13.0)
+      rswag-api (= 2.13.0)
+      rswag-specs (= 2.13.0)
+      rswag-ui (= 2.13.0)
+    rswag-api (2.13.0)
+      activesupport (>= 3.1, < 7.2)
+      railties (>= 3.1, < 7.2)
+    rswag-specs (2.13.0)
+      activesupport (>= 3.1, < 7.2)
+      json-schema (>= 2.2, < 5.0)
+      railties (>= 3.1, < 7.2)
+      rspec-core (>= 2.14)
+    rswag-ui (2.13.0)
+      actionpack (>= 3.1, < 7.2)
+      railties (>= 3.1, < 7.2)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     rufus-scheduler (3.9.1)
@@ -392,6 +409,7 @@ DEPENDENCIES
   redis
   redis-rails
   rspec-rails (~> 5.0)
+  rswag
   rufus-scheduler (~> 3.8, >= 3.8.1)
   search_flip
   selenium-webdriver

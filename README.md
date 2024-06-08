@@ -34,7 +34,7 @@ To avoid race conditions for creating chats and messages, rabbit mq is used so t
 For updating endpoints, DB locks are used to permit only one request to update the row so if one transaction is updating the row the second transaction will be forced to wait until the first is completed and the lock is released before it can make updates. </br>
 
 ## Usage
-This app has 13 endpoints user can use to create applications, chats & messages, you can use them as following :- <br/>
+This app has 13 endpoints user can use to create applications, chats & messages, you can view and try them using swagger endpoint `http://127.0.0.1:3000/api-docs/index.html` or check the details below :- <br/>
 * **Create Application Endpoint** : `POST /application/` used for creating an application
   #### Request Body Params
   ```
@@ -199,6 +199,10 @@ This app has 13 endpoints user can use to create applications, chats & messages,
   ```
 
 <br/>
+
+### Testing
+
+Tests are built using rspec, and can be run using `rspec` command
 
 ### Models
 3 models are used to store data
