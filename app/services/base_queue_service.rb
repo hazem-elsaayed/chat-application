@@ -5,7 +5,7 @@ class BaseQueueService
   attr_accessor :connection, :channel
 
   def initialize
-    return if ENV['DISABLE_RABBITMQ']
+    return if ENV['DISABLE_RABBITMQ'] || ENV['RAILS_ENV'] == 'test'
     @connection = Bunny.new(automatically_recover: true, host: ENV.fetch('RABBITMQ_HOST'))
     @connection.start
     @channel = @connection.create_channel
@@ -13,6 +13,6 @@ class BaseQueueService
   end
 
   def close
-    @connection.close unless ENV['DISABLE_RABBITMQ']
+    @connection.close unless ENV['DISABLE_RABBITMQ'] || ENV['RAILS_ENV'] == 'test'
   end
 end

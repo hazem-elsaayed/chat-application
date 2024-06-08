@@ -1,7 +1,7 @@
 class ConsumerService
 
   def initialize
-    return if ENV['DISABLE_RABBITMQ']
+    return if ENV['DISABLE_RABBITMQ'] || ENV['RAILS_ENV'] == 'test'
     @mq_service = BaseQueueService.instance
     @channel = @mq_service.channel
     @channel.prefetch(1)
@@ -9,7 +9,7 @@ class ConsumerService
   end
 
   def consume_message(queue_name, model)
-    return if ENV['DISABLE_RABBITMQ']
+    return if ENV['DISABLE_RABBITMQ'] || ENV['RAILS_ENV'] == 'test'
     queue = @channel.queue(queue_name, durable: true)
     puts "Start Consuming Message for #{model.name}"
     begin
