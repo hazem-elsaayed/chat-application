@@ -44,6 +44,9 @@ gem 'active_model_serializers'
 gem 'bunny'
 gem 'redis'
 gem 'redis-rails'
+gem 'elasticsearch-model'
+gem 'elasticsearch', "< 7.14"
+gem 'dotenv-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
